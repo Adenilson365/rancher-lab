@@ -12,6 +12,19 @@
 
 - Revisar certificados
 
+  [TLS](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-references/tls-settings#agent-tls-enforcement)
+
+- Há 3 modos de TLS
+  - strict - Usa o TLS gerado pelo cluster e precisa ter cert-manager
+  - system-store
+  - false
+- O default é strict
+- Para alterar acesse o cluster local e edit o setting, default altere para system-store
+
+```shell
+kubectl edit setting agent-tls-mode -o yaml
+```
+
 ### Versão rancher vs k8s
 
 ```txt
