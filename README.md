@@ -25,6 +25,47 @@
 kubectl edit setting agent-tls-mode -o yaml
 ```
 
+### Para usar PrivateCA:
+
+[Configurar CA ](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/resources/add-tls-secrets)
+
+- Além dos certificados tls é necessário fornecer a CA, para que o downstream consiga validar a conexão TLS
+- Caso não forneça, nos pods rancher no upstream o erro abaixo:
+  ![alt text](./doc-assets/erro-mount-vol-ca.png)
+
+- Nesse lab foi usado certificado gerado pela Let's encrypt usando certbot
+- Isso gera 4 arquivos: cert.pem chain.pem fullchain.pem privkey.pem
+- O certificado TLS é gerado com fullchain.pem e a privkey.pem
+
+```shell
+kubectl create secret generic tls-rancher-ingress   --from-file=tls.crt=./fullchain.pem   --from-file=tls.key=./privkey.pem    -n cattle-system
+
+```
+
+- CA
+- Crie uma cópia do chain.pem com nome cacerts.pem
+- crie o secret que contém a ca
+
+```shell
+kubectl -n cattle-system create secret generic tls-ca --from-file=./chain.pem
+```
+
+- **Troubleshooting**
+- Ao criar o cluster o erro:
+  ![alt text](./doc-assets/erro-conditions.png)
+- Pods para verificar logs
+- Upstream: rancher pods no namespace cattle-system
+- Downstream: agent pods no nampespace cattle-system
+- Possível validar o cacerts na UI em: globalsettings>showcacerts
+- Endpoint onde downstream consulta cacerts: https://<MeuDominio>/v3/settings/cacerts
+
+- Calcular o checksum:
+
+```shell
+# Precisa ser igual ao no pod do agent no downstream
+  sha256sum cacerts.pem
+```
+
 ### Versão rancher vs k8s
 
 ```txt
