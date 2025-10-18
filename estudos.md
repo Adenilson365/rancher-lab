@@ -29,6 +29,6 @@ Menu: clusterManagement>cluster>editConfig
 
 - Primeiro noscheduling, depois noexecute
 
-> Durante a atualização o o Rancher perdeu comunicação com o downstream, o agent não conseguiu sincronizar o volume de credentials
+> Durante a atualização o Rancher perdeu comunicação com o downstream, o agent não conseguiu sincronizar o volume de credentials
 >
 > > O Processo de atualização continuou durante a perda de comunicação, **A perda durou alguns minutos, até o agent conseguir sincronizar os volumes**

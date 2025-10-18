@@ -1,0 +1,16 @@
+# restore-migration.yaml
+apiVersion: resources.cattle.io/v1
+kind: Restore
+metadata:
+  name: restore-migration
+spec:
+  backupFilename: bkp-181020251139-a807586d-3f1b-4dc3-91b0-6942565fd40f-2025-10-18T14-40-35Z.tar.gz
+  prune: false
+  storageLocation:
+    s3:
+      credentialSecretName: s3-creds
+      credentialSecretNamespace: default
+      bucketName: rancher-backup-rancker-konzelamnn-com-br
+      folder: rancher-local
+      region: us-east-1
+      endpoint: s3.us-east-1.amazonaws.com
