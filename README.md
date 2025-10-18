@@ -3,11 +3,12 @@
 ### Objetivos:
 
 - 1: Compreender os passos necessários para instalar e gerenciar o Rancher
+- 1.1: Script install.sh
 - 2: Compreender a arquitetura e como o rancher funciona para executar suas funcionalidades
 - 3: Criar, Deletar, Importar, Gerenciar clusters.
 - 3.1 [Como fiz: Importar Clusters](./doc-assets/import-cluster/README.md)
 - 4: Criar, Deletar, Fornecer, Revogar usuários e acessos.
-- 4.1: [Como fiz: Gerenciamento de Usuários](./estudos)
+- 4.1: [Como fiz: Gerenciamento de Usuários](./estudos.md)
 - 5: **O Que acontece** com clusters gerenciados ao deletar e restaurar o rancher ?
 - 5.1: [Como fiz: Destroy e Restore](./doc-assets/deletar-k8s-upstream/README.md)
 - 5.2: [Como fiz: Uninstall Rancher](./doc-assets/uninstall-rancher/deletar.md)

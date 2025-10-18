@@ -15,9 +15,13 @@
   ![alt text](image-3.png)
 
 - deletar o cluster importado via UI
-  ![alt text](image-4.png)
+
+![alt text](image-4.png)
 
 - Vai remover o cluster da gestão do Rancher e limpar os objetos instalados no cluster, incluindo namespaces.
 - Precisa validar oque acontece se durante esse processo o cluster perder conexão.
   - Retoma a limpeza ao retornar conexão?
   - È necessário limpar na mão oque restar?
+    > Esse processo não deleta o cluster, apenas limpa os objetos criados pelo Rancher.
+    >
+    > > Cluster criados no rancher são deletados nesse processo.

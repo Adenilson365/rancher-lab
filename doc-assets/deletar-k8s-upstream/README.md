@@ -1,6 +1,8 @@
 ### Delete do Cluster Upstream
 
 - Objetivo: Validar oque acontece com o cluster gerenciado e como recuperar seu controle após o restore do rancher.
+- Fiz o delete aplicando terraform destroy --auto-approve
+- Fiz o install/restore com script: restore-migration.sh
 
 ### DR:
 
