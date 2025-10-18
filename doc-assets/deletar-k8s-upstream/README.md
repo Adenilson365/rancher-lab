@@ -19,7 +19,7 @@
 - 1: Crie 1 secret com as accessKey e SecretKey da ServiceAccount com permissão no Aws S3
 - 2: Instale o Operator diretamente na UI em: local>charts>rancher-backup
   - No primeiro link há o passo a passo.
-- 3: Crie o restore completo do cluster.
+- 3: Crie o backup completo do cluster.
 - 4: Destruia o cluster upstream, _Destruir não afeta cluster downstream_
   - A destruição abrupta deixará o downstream _sujo_ com objetos criados pelo upstream
   - No uninstall Rancher esses objetos são limpos.

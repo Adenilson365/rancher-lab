@@ -5,12 +5,12 @@
 - 1: Compreender os passos necessários para instalar e gerenciar o Rancher
 - 2: Compreender a arquitetura e como o rancher funciona para executar suas funcionalidades
 - 3: Criar, Deletar, Importar, Gerenciar clusters.
-- 3.1 [Importar Clusters](./doc-assets/import-cluster/README.md)
+- 3.1 [Como fiz: Importar Clusters](./doc-assets/import-cluster/README.md)
 - 4: Criar, Deletar, Fornecer, Revogar usuários e acessos.
-- 4.1: [Gerenciamento de Usuários](./estudos)
+- 4.1: [Como fiz: Gerenciamento de Usuários](./estudos)
 - 5: **O Que acontece** com clusters gerenciados ao deletar e restaurar o rancher ?
-- 5.1: [Destroy e Restore](./doc-assets/deletar-k8s-upstream/README.md)
-- 5.2: [Uninstall Rancher](./doc-assets/uninstall-rancher/deletar.md)
+- 5.1: [Como fiz: Destroy e Restore](./doc-assets/deletar-k8s-upstream/README.md)
+- 5.2: [Como fiz: Uninstall Rancher](./doc-assets/uninstall-rancher/deletar.md)
 - 6: Documentar todo o processo, buscando **reprodutibilidade**
 
 ### Conceitos Base ( Oque é o Rancher):
@@ -21,9 +21,14 @@
 - Se comunica através de pods rodando no cluster gerenciador e no cluster gerenciado.
 - [Veja a arquitetura do Rancher](https://ranchermanager.docs.rancher.com/reference-guides/rancher-manager-architecture/rancher-server-and-components)
 
+- **Termos**:
+
+  - Upstream: Cluster onde está instalado o rancher e que gerencia os demais, na UI aparece como _local_
+  - Downstream: Cluster gerenciado pelo Upstream.
+
 ### Repositórios:
 
-[Repositório IAC GCP](https://github.com/Adenilson365/devopslabs01-iac)
+[Repositório IAC GCP - Terraform ](https://github.com/Adenilson365/devopslabs01-iac)
 
 ### Documentação Oficial e material de apoio:
 
@@ -32,21 +37,18 @@
 - [Instalar Rancher via Helm](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster#install-the-rancher-helm-chart)
 
 - [Cert-manager](https://artifacthub.io/packages/helm/cert-manager/cert-manager)
+- [Let's Encrypt](https://letsencrypt.org/getting-started/)
 
 ### Configurando comunicação e TLS
 
-- **Termos**:
-
-  - Upstream: Cluster onde está instalado o rancher e que gerencia os demais, na UI aparece como _local_
-  - Downstream: Cluster gerenciado pelo Upstream.
-
-- [Modelos de TLS](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-references/tls-settings#agent-tls-enforcement)
+- [Documentação Oficial: Modos de TLS](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/installation-references/tls-settings#agent-tls-enforcement)
 
 - Há 3 modos de TLS
   - strict
     - Recomendado e ativado por default.
     - Obriga a usar TLS na comunicação entre upstream e downstream
     - TLS pode ser fornecido de 3 formas: Rancher ou Let's Ecrypt usando cert-manager, ou criando manualmente os certs.
+      - Nesse lab, Instalei fornecendo os certificados.
   - system-store
     - Rancher Agent confia em qualquer certificado criado por uma CA contida no Cacerts.
   - false
@@ -54,12 +56,12 @@
 - É possível alterar esses modos usando o CRD setting no cluster Upstream.
 
 ```shell
-kubectl edit setting agent-tls-mode -o yaml
+kubectl edit settings agent-tls-mode -o yaml
 ```
 
 ### Comando HELM para instalar com CA própria:
 
-[Documentação Oficial](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster#3-choose-your-ssl-configuration)
+[Documentação Oficial de referência](https://ranchermanager.docs.rancher.com/getting-started/installation-and-upgrade/install-upgrade-on-a-kubernetes-cluster#3-choose-your-ssl-configuration)
 
 ```shell
 helm upgrade --install rancher rancher-stable/rancher \
@@ -91,13 +93,15 @@ kubectl create secret generic tls-rancher-ingress   --from-file=tls.crt=./fullch
 
 - CA
 - Crie uma cópia do chain.pem com nome cacerts.pem
-- crie o secret que contém a ca
+- Apartir dessa cópia crie o secret que contém a ca
 
 ```shell
 kubectl -n cattle-system create secret generic tls-ca --from-file=./chain.pem
 ```
 
-- **Troubleshooting**
+- ### Alguns erros encontrados durante o processo de instalação:
+
+- **Erro de certificados**
 - Ao criar o cluster o erro:
   ![alt text](./doc-assets/erro-conditions.png)
 - Pods para verificar logs
@@ -106,16 +110,10 @@ kubectl -n cattle-system create secret generic tls-ca --from-file=./chain.pem
 - Possível validar o cacerts na UI em: globalsettings>showcacerts
 - Endpoint onde downstream consulta cacerts: https://<MeuDominio>/v3/settings/cacerts
 
-### Versão rancher vs k8s
+- **Erro: Versão rancher vs versão do Kubernetes**
 
 ```txt
 Error: INSTALLATION FAILED: chart requires kubeVersion: < 1.33.0-0 which is incompatible with Kubernetes v1.33.2-gke.1240000
 ```
 
-### Instalação
-
-### Criar Cluster com Ec2
-
-[Documentação](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/launch-kubernetes-with-rancher/use-new-nodes-in-an-infra-provider/create-an-amazon-ec2-cluster)
-
--
+> Houve alguns erros menores, principalmente no momento de criar clusters, importar, restaurar backup e conforme foram acontecendo as mensagens são amigáveis e foi possível solucionar.
