@@ -1,5 +1,7 @@
 ## Rancher - Gerenciamento multi-cluster
 
+![Diagrama Conceitual](./doc-assets/Rancher-MGMT.png)
+
 ### Objetivos:
 
 - 1: Compreender os passos necessários para instalar e gerenciar o Rancher
@@ -104,7 +106,7 @@ kubectl -n cattle-system create secret generic tls-ca --from-file=./chain.pem
 
 - **Erro de certificados**
 - Ao criar o cluster o erro:
-  ![alt text](./doc-assets/erro-conditions.png)
+  ![Erro Conditions](./doc-assets/erro-conditions.png)
 - Pods para verificar logs
 - Upstream: rancher pods no namespace cattle-system
 - Downstream: agent pods no nampespace cattle-system
