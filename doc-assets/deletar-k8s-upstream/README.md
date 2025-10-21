@@ -29,7 +29,9 @@
 - 6: Recrie o secret de credentials
 - 7: Instale o rancher-backup-operator
 - 8: Aplique o manifesto do restore e siga os pŕoximos passos após concluir o restore com sucesso:
-  ![alt text](image-2.png)
+
+  ![Saída do comando kubectl get restore, mostando status do processo de restore](image-2.png)
+
 - 9: Instale novamente o Rancher como da primeira vez, precisa ser na mesma versão e parâmetros.
   - Se usou nginx, cert-manager, precisa instalar também.
 - 10: Rancher restabelecido ( UI, Clusters Importados, Cluster Gerenciados/criados)
@@ -46,8 +48,8 @@
 
 - Credentials foram restauradas:
 
-![alt text](image.png)
+![Lista credenciais anteriores ao delete recriadas no restore](image.png)
 
 - Clusters Restaurados:
 
-![alt text](image-1.png)
+![Lista de cluster gerenciados reconectados após restore](image-1.png)

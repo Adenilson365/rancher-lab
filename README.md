@@ -83,7 +83,7 @@ helm upgrade --install rancher rancher-stable/rancher \
 
 - Além dos certificados tls é necessário fornecer a CA, para que o downstream consiga validar a conexão TLS
 - Caso não forneça, nos pods rancher no upstream o erro abaixo:
-  ![alt text](./doc-assets/erro-mount-vol-ca.png)
+  ![Print: Saida comando kubectl pod describe, mensagem: MountVolume.SetUp failed for volume ts-ca-volume](./doc-assets/erro-mount-vol-ca.png)
 
 - Nesse lab foi usado certificado gerado pela Let's encrypt usando certbot
 - Isso gera 4 arquivos: cert.pem chain.pem fullchain.pem privkey.pem
@@ -106,7 +106,7 @@ kubectl -n cattle-system create secret generic tls-ca --from-file=./chain.pem
 
 - **Erro de certificados**
 - Ao criar o cluster o erro:
-  ![Erro Conditions](./doc-assets/erro-conditions.png)
+  ![Imagem do erro conditions mostrado na Interface Grafica: "Mensagem do erro: Cluster agent is not connected"](./doc-assets/erro-conditions.png)
 - Pods para verificar logs
 - Upstream: rancher pods no namespace cattle-system
 - Downstream: agent pods no nampespace cattle-system
