@@ -1,6 +1,33 @@
 ## Rancher - Gerenciamento multi-cluster
 
-![Diagrama Conceitual](./doc-assets/Rancher-MGMT.png)
+![Arquitetura do Rancher: usuários acessam a UI do Rancher no cluster upstream; o Rancher gerencia clusters downstream (EKS, GKE, local e on-premises) e faz backup via Rancher Backup Operator para o Amazon S3.](./doc-assets/Rancher-MGMT.png)
+
+<details>
+  <summary>Descrição detalhada do diagrama</summary>
+
+  Elementos e fluxos:
+
+  - **Usuário DEV** (topo): acessa o **Rancher UI** no **cluster Upstream** com **RBAC** aplicado.
+  - **Usuário ADMIN** (esquerda): 
+    - acessa o **Rancher UI** no **Upstream**;
+    - também possui **acesso direto** aos clusters **Downstream** (seta separada).
+  - **Rancher (Upstream)** (centro): instancia do Rancher Manager.
+    - Seta para a direita: **RancherBackupOperator → AWS S3** (destino dos backups).
+    - Seta para baixo: **Full Management** dos clusters **Downstream**.
+  - **Downstream** (caixa inferior pontilhada): conjunto de alvos gerenciados com as capacidades **Provision / Import / Upgrade / Delete / RBAC**.
+    - Ícones representando:
+      - **AWS EKS**
+      - **GCP GKE**
+      - **Kubernetes Local**
+      - **On-Premises** (VMs ou bare-metal)
+  - Legendas nas setas:
+    - “**Access Through Rancher UI / RBAC**” entre usuários e o Upstream.
+    - “**Access Rancher UI**” (ADMIN → Upstream).
+    - “**Direct Access**” (ADMIN → Downstream).
+    - “**Full Management**” (Upstream → Downstream).
+
+  Propósito do diagrama: mostrar que o Rancher, executando no **Upstream**, centraliza o **acesso via UI com RBAC**, realiza **gestão completa** de múltiplos clusters **Downstream** (na nuvem e fora dela) e integra **backup/migração** por meio do **Rancher Backup Operator** para **Amazon S3**.
+</details>
 
 ### Objetivos:
 
